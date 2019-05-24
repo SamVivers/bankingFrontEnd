@@ -21,7 +21,7 @@ export default class App extends Component {
   render() {
     if (this.state.id === 0) {
       return (
-        <div>
+        <div class="container">
           <div class="jumbotron">
             <h1 class="display-4">Welcome to QA Bank!</h1>
             <p class="lead">To access your account, please enter your id below.</p>
@@ -40,26 +40,46 @@ export default class App extends Component {
       );
     } else {
       return (
-        <div>
-          <div>
-            <button onClick={this.deleteAcc}>Delete Account</button>
-            <p>{this.state.id}</p>
-            <p>{this.state.balance}</p>
-            <input placeholder="Deposit" onChange={this.inputDeposit}></input>
-            <button onClick={this.deposit}>Deposit</button>
-            <br />
-            <input placeholder="Withdraw" onChange={this.inputWithdraw}></input>
-            <button onClick={this.withdraw}>Withdraw</button>
-            <p>Transfer</p>
-            <input placeholder="Amount" onChange={this.transferAmount}></input>
-            <input placeholder="Recipient" onChange={this.transferRecipient}></input>
-            <button onClick={this.transfer}>Transfer</button>
+        <div class="container">
+          <div class="jumbotron">
+            <div class="card">
+              <div class="card-header">
+                Account number: {this.state.id}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Your current balance is: £{this.state.balance}</h5>
+              </div>
+            </div>
+            <div class="input-group my-3 col-3">
+              <input type="text" class="form-control" placeholder="Deposit" onChange={this.inputDeposit}></input>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary" onClick={this.deposit}>Deposit</button>
+              </div>
+            </div>
+
+            <div class="input-group mb-3 col-3">
+              <input type="text" class="form-control" placeholder="Withdraw" onChange={this.inputWithdraw}></input>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary" onClick={this.withdraw}>Withdraw</button>
+              </div>
+            </div>
+
+            <div class="input-group col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Transfer Money</span>
+              </div>
+              <input type="text" class="form-control" placeholder="Amount" onChange={this.transferAmount} />
+              <input type="text" placeholder="Recipient" onChange={this.transferRecipient} class="form-control" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary" onClick={this.transfer}>Transfer</button>
+              </div>
+            </div>
           </div>
+          <button class="btn btn-danger" onClick={this.deleteAcc}>Delete Account</button>
         </div>
       );
     }
   }
-
   getAcc = () => {
     let URL = `/api/account/` + this.state.inputId;
     let request = new XMLHttpRequest();
@@ -84,7 +104,7 @@ export default class App extends Component {
     request.onload = () => {
       console.log(request.response)
       this.setState({
-        id:request.response.id,
+        id: request.response.id,
       })
     }
     let body = {
@@ -100,7 +120,9 @@ export default class App extends Component {
     request.open('DELETE', URL);
     request.responseType = 'json';
     request.onload = () => {
-      //render a homepage
+      this.setState({
+        id: 0
+      })
     }
     request.send();
   }
