@@ -9,7 +9,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       id: 0,
-      balance: "",
+      balance: 0,
       inputId: "",
       inputDeposit: "",
       inputWithdraw: "",
@@ -102,9 +102,11 @@ export default class App extends Component {
     request.setRequestHeader("Accept", "application/json");
     request.responseType = 'json';
     request.onload = () => {
-      console.log(request.response)
       this.setState({
         id: request.response.id,
+        inputId: request.response.id,
+        balance: request.response.balance
+        
       })
     }
     let body = {
