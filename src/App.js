@@ -33,6 +33,7 @@ export default class App extends Component {
                   <button type="button" class="btn btn-outline-secondary" onClick={this.getAcc}>Login</button>
                 </div>
               </div>
+              <button class="btn btn-outline-secondary" onClick={this.createAcc}>New Account</button>
             </div>
           </div>
         </div>
